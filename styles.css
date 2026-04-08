@@ -1,0 +1,257 @@
+﻿:root {
+    color-scheme: light;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    line-height: 1.6;
+    padding-top: 70px;
+}
+body, button, input, textarea {
+    font: inherit;
+}
+.container {
+    width: min(1100px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.1);
+    z-index: 1000;
+    height: 70px;
+}
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: min(1100px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1d4ed8 0%, #9333ea 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+.nav-link {
+    text-decoration: none;
+    color: #111827;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+}
+.nav-link:hover,
+.nav-link.active {
+    color: #1d4ed8;
+}
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #1d4ed8;
+    border-radius: 2px;
+}
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    gap: 5px;
+}
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #111827;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+/* Pages Container */
+.pages-container {
+    position: relative;
+    min-height: 100vh;
+}
+.page {
+    display: none;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-in-out;
+}
+.page.active {
+    display: block;
+    opacity: 1;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.page-content {
+    padding: 3rem 0;
+}
+.hero {
+    color: white;
+    padding: 4rem 0;
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    background-image: url(img/logo\ 3d\ of\ sob.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.hero .container {
+    display: grid;
+    gap: 1rem;
+}
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 0.85;
+    margin: 0;
+}
+h1 {
+    margin: 0.5rem 0;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+}
+.subtitle {
+    max-width: 720px;
+    margin: 0;
+    font-size: 1.05rem;
+    opacity: 0.92;
+}
+.contact {
+    margin-top: 1rem;
+    font-weight: 600;
+}
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+section {
+    margin-bottom: 3rem;
+}
+h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #111827;
+}
+p {
+    margin: 0 0 1rem;
+}
+.grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.card, .project, .contact-card {
+    background:linear-gradient(135deg, #1d4ed8 0%, #9333ea 100%);
+    border-radius: 20px;
+    padding: 1.6rem;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+}
+.card h3, .project h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: #111827;
+}
+.card ul {
+    padding-left: 1.2rem;
+    margin: 0;
+}
+.card li {
+    margin-bottom: 0.7rem;
+}
+.project p {
+    margin: 0;
+}
+.contact-card p {
+    margin: 0.5rem 0;
+}
+.footer {
+    padding: 1.5rem 0;
+    text-align: center;
+    color: #6b7280;
+    background-color: #7e9cee77;
+}
+/* Responsive Menu */
+@media (max-width: 720px) {
+    .menu-toggle {
+        display: flex;
+    }
+    .nav-menu {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: white;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    .nav-menu.active {
+        max-height: 300px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+    }
+    .nav-menu li {
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .nav-menu li:last-child {
+        border-bottom: none;
+    }
+    .nav-link {
+        display: block;
+        padding: 1rem;
+    }
+    .nav-link.active::after {
+        bottom: 0;
+    }
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translateY(12px);
+    }
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translateY(-12px);
+    }
+    .hero {
+        padding: 3rem 0;
+    }
+    .container {
+        padding: 1.5rem 0;
+    }
+}
+
