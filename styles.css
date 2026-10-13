@@ -207,14 +207,59 @@ p { margin: 0 0 1rem; color: var(--ink-2); }
 .btn-ghost:hover { border-color: var(--ink); background: rgba(247, 243, 236, .05); }
 
 .hero-visual { position: relative; display: grid; place-items: center; aspect-ratio: 1; max-width: 440px; justify-self: center; width: 100%; }
-.avatar {
-  width: 62%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%;
-  border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--violet);
+/* Photo de profil : cadre portrait 4:5, ombre décalée, carte citron derrière */
+.portrait {
+  position: relative; z-index: 1; margin: 0; width: 66%; max-width: 100%;
   animation: float 6s ease-in-out infinite;
 }
+.portrait-back {
+  position: absolute; inset: 0; border-radius: 28px; background: var(--lime);
+  border: 2px solid var(--ink); transform: rotate(-6deg);
+  animation: back-sway 7s ease-in-out infinite alternate;
+}
+@keyframes back-sway { from { transform: rotate(-6deg); } to { transform: rotate(-2deg) translate(-6px, 4px); } }
+.portrait-card {
+  position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden;
+  border: 2px solid var(--ink); background: var(--surface);
+  box-shadow: 10px 10px 0 var(--violet);
+  transition: box-shadow .4s var(--ease);
+  animation: photo-in 1.2s .3s cubic-bezier(.7, 0, .2, 1) both;
+}
+.portrait-card img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+  animation: photo-zoom 1.6s .3s var(--ease) both;
+  transition: transform .6s var(--ease), filter .6s var(--ease);
+}
+/* Révélation : rideau qui s'ouvre de bas en haut, puis léger dézoom */
+@keyframes photo-in { from { clip-path: inset(100% 0 0 0 round 28px); } to { clip-path: inset(0 0 0 0 round 28px); } }
+@keyframes photo-zoom { from { transform: scale(1.25); filter: saturate(.4) brightness(.8); } }
+/* Reflet qui balaie la photo toutes les quelques secondes, et halo qui suit la souris */
+.portrait-shine {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(300px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, .18), transparent 55%),
+    linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .28) 50%, transparent 65%);
+  background-size: 100% 100%, 250% 100%;
+  background-position: 0 0, 150% 0;
+  animation: photo-sheen 6s 2s ease-in-out infinite;
+}
+@keyframes photo-sheen { 0% { background-position: 0 0, 150% 0; } 25%, 100% { background-position: 0 0, -60% 0; } }
+.portrait-card:hover { box-shadow: 14px 14px 0 var(--lime); }
+.portrait-card:hover img { transform: scale(1.06); filter: saturate(1.1) contrast(1.05); }
+.portrait-badge {
+  position: absolute; left: -12%; bottom: 8%; z-index: 2;
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono); font-size: .78rem; font-weight: 600; color: var(--ink);
+  padding: .45rem .85rem; border-radius: 999px; border: 1.5px solid var(--ink);
+  background: var(--bg-2); box-shadow: 3px 3px 0 var(--ink);
+  animation: float 5s -2s ease-in-out infinite;
+}
 @keyframes float { 50% { transform: translateY(-14px); } }
-.orbit { position: absolute; inset: 0; border: 1px dashed var(--line); border-radius: 50%; animation: spin 30s linear infinite; }
-.orbit::before { content: ""; position: absolute; inset: 14%; border: 1px dashed rgba(247, 243, 236, .08); border-radius: 50%; }
+/* Les cercles pointillés restent derrière la photo, les bulles qui tournent passent devant */
+.hero-visual::before, .hero-visual::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+.hero-visual::before { inset: 0; border: 1px dashed var(--line); }
+.hero-visual::after { inset: 14%; border: 1px dashed rgba(247, 243, 236, .08); }
+.orbit { position: absolute; inset: 0; z-index: 3; border-radius: 50%; pointer-events: none; animation: spin 30s linear infinite; }
 .planet {
   position: absolute; font-family: var(--font-mono); font-size: .75rem; font-weight: 600; color: var(--on-color);
   padding: .35rem .7rem; border-radius: 999px; border: 1.5px solid var(--ink);
@@ -224,7 +269,7 @@ p { margin: 0 0 1rem; color: var(--ink-2); }
 .p2 { bottom: 12%; left: 2%; background: var(--orange); }
 .p3 { bottom: 12%; right: 0; background: var(--mint); }
 @keyframes spin { to { transform: rotate(360deg); } }
-.star { position: absolute; fill: var(--lime); animation: twinkle 2.8s ease-in-out infinite; }
+.star { position: absolute; z-index: 3; fill: var(--lime); animation: twinkle 2.8s ease-in-out infinite; }
 .star-a { width: 34px; top: 14%; right: 12%; }
 .star-b { width: 22px; bottom: 6%; left: 30%; fill: var(--violet); animation-delay: -1.4s; }
 @keyframes twinkle { 50% { transform: scale(.6) rotate(25deg); opacity: .6; } }
